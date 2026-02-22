@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>오픈 서바이버 (STABLE BUILD)</title>
+    <!-- 모든 브라우저에서 일관된 폰트(macOS 스타일)를 유지하기 위해 Inter 폰트를 로드합니다 -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* macOS Safari의 시스템 폰트 느낌을 위해 전용 폰트 스택을 사용합니다 */
+            font-family: 'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo';
+            overflow: hidden;
+        }
+
+        #main-layout {
+            display: flex;
+            gap: 20px;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            position: relative;
+        }
+
+        #game-container {
+            width: 800px;
+            height: 600px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #444;
+            border-radius: 4px;
+        }
+
+        /* UI Overlay */
+        #exp-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+
+        #exp-fill {
+            width: 0%;
+            height: 100%;
+            background: #00ffff;
+            transition: width 0.2s;
+        }
+
+        #timer {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 10;
+            text-shadow: 2px 2px 4px #000;
+            color: #fff;
+        }
+
+        #level {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ffff;
+            z-index: 10;
+            text-shadow: 2px 2px 4px #000;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #hp-bar-outer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 12px;
+            background: #333;
+            border: 2px solid #000;
+            z-index: 10;
+            border-radius: 6px;
+        }
+
+        #hp-fill {
+            width: 100%;
+            height: 100%;
+            background: #ff3333;
+            transition: width 0.2s;
+            border-radius: 4px;
+        }
+
+        /* Control Buttons */
+        #pause-btn {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #555;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 50;
+            transition: 0.2s;
+        }
+
+        #pause-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #00ff88;
+        }
+
+        #pause-btn span {
+            font-size: 1.2rem;
+            color: #fff;
+            pointer-events: none;
+        }
+
+        /* Modals */
+        #level-up-modal,
+        #game-over-modal,
+        #pause-modal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        #pause-modal {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .option-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .option-card {
+            background: #222;
+            border: 2px solid #444;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-card:hover {
+            border-color: #00ff88;
+            transform: translateY(-5px);
+            background: #2a2a2a;
+        }
+
+        .option-card h3 {
+            margin: 0 0 10px 0;
+            color: #00ff88;
+            font-size: 1rem;
+        }
+
+        .option-card p {
+            font-size: 0.8rem;
+            color: #ccc;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        #restart-btn,
+        #resume-btn {
+            background: #00ff88;
+            color: black;
+            border: none;
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #restart-btn:hover,
+        #resume-btn:hover {
+            background: #00cc66;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        .card {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        h3 {
+            margin: 0 0 10px 0;
+            color: #00ff88;
+            font-size: 1rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            font-size: 0.8rem;
+            background: #111;
+            color: #eee;
+            padding: 4px;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        /* Admin Console */
+        #admin-panel {
+            display: none;
+        }
+
+        .admin-btn {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            background: #444;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .admin-btn:hover {
+            background: #555;
+            border-color: #00ff88;
+        }
+
+        .admin-btn.active {
+            background: #004422;
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        #alert-box {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff3333;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px #000;
+            z-index: 50;
+            display: none;
+        }
+
+        #version-info {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            font-size: 0.7rem;
+            color: #444;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-layout">
+        <div id="game-container">
+            <div id="exp-bar">
+                <div id="exp-fill"></div>
+            </div>
+            <div id="timer">00:00</div>
+            <div id="level">Lv. 1</div>
+            <div id="hp-bar-outer">
+                <div id="hp-fill"></div>
+            </div>
+            <div id="alert-box">경고: 보스 출현!</div>
+
+            <div id="pause-btn"><span>||</span></div>
+
+            <div id="level-up-modal">
+                <h1 style="color:#00ff88">엔지니어링 업그레이드</h1>
+                <div class="option-container" id="options"></div>
+            </div>
+
+            <div id="pause-modal">
+                <h1 style="color:#fff">일시 정지</h1>
+                <button id="resume-btn">계속하기</button>
+            </div>
+
+            <div id="game-over-modal">
+                <h1 style="color:#ff3333; font-size: 3rem;">게임 오버</h1>
+                <div id="final-stats" style="text-align: center; color: #ccc; line-height: 1.6; margin: 20px 0;"></div>
+                <button id="restart-btn" onclick="location.reload()">다시 시작</button>
+            </div>
+        </div>
+
+        <div id="sidebar">
+            <div class="card">
+                <h3>스킨 모듈</h3>
+                <label>👤 플레이어 스킨</label>
+                <input type="file" id="p-up" accept="image/*">
+                <label style="margin-top:10px;">👾 적 스킨</label>
+                <input type="file" id="e-up" accept="image/*">
+            </div>
+
+            <div class="card">
+                <h3>🎮 플레이 방법</h3>
+                <div style="font-size: 0.8rem; color: #aaa; line-height: 1.6;">
+                    • <strong>이동:</strong> W, A, S, D 또는 방향키<br>
+                    • <strong>공격:</strong> 자동 조준 및 자동 발사<br>
+                    • <strong>목표:</strong> 적을 물리치고 보석을 모아 레벨업하며 최대한 오래 살아남으세요.<br>
+                    • <strong>정지:</strong> 우측 하단 || 버튼 클릭
+                </div>
+            </div>
+
+            <div class="card" id="admin-panel">
+                <h3 style="color:#ffdd00">⚙️ 관리 콘솔</h3>
+                <button class="admin-btn" id="god-btn">무적 모드: OFF</button>
+                <button class="admin-btn" id="time-btn">+1분 가속</button>
+                <button class="admin-btn" id="lvl-btn">즉시 레벨업</button>
+            </div>
+
+            <div id="version-info">버전: v1.0.23</div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+    <script src="src/game.js"></script>
+</body>
+
+</html>
