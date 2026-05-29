@@ -692,7 +692,7 @@
                 <div class="modal-panel">
                     <h1 class="modal-title danger">게임 오버</h1>
                     <div id="final-stats" style="text-align: center; color: #cdd8e2; line-height: 1.8; margin: 20px 0;"></div>
-                    <button id="restart-btn" onclick="location.reload()">다시 시작</button>
+                    <button id="restart-btn">다시 시작</button>
                 </div>
             </div>
         </div>
@@ -748,6 +748,19 @@
     </div>
     <div id="version-info">버전: v1.0.24</div>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
+    <script src="src/constants.js"></script>
+    <script src="src/entities/PlayerManager.js"></script>
+    <script src="src/entities/WeaponManager.js"></script>
+    <script src="src/entities/EnemyManager.js"></script>
+    <script src="src/entities/ProjectileManager.js"></script>
+    <script src="src/systems/CollisionManager.js"></script>
+    <script src="src/systems/EffectsManager.js"></script>
+    <script src="src/ui/UIManager.js"></script>
+    <script src="src/ui/ModalManager.js"></script>
+    <script src="src/ui/AdminConsole.js"></script>
+    <script src="src/ui/SkinUploader.js"></script>
+    <script src="src/scenes/StartScene.js"></script>
+    <script src="src/scenes/MainScene.js"></script>
     <script src="src/game.js"></script>
 </body>
 
