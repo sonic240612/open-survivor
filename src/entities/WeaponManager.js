@@ -37,7 +37,7 @@ class WeaponManager {
             for (let i = 0; i < playerStats.lightningCount; i++) {
                 const t = Phaser.Utils.Array.GetRandom(activeEnemies);
                 if (t) {
-                    const beam = s.add.graphics().lineStyle(4, 0xffffff, 0.62).lineBetween(t.x, 0, t.x, t.y);
+                    const beam = s.add.graphics().lineStyle(6, 0xffffff, 0.3).lineBetween(t.x, 0, t.x, t.y);
                     s.time.delayedCall(80, () => beam.destroy());
                     s.collisionManager.hitEnemy(t, playerStats.lightningDamage, 'lightning');
                     if (playerStats.stormCaller) this.chainStormLightning(t, activeEnemies);
@@ -54,7 +54,7 @@ class WeaponManager {
             .slice(0, 2);
         candidates.forEach((target, i) => {
             const beam = s.add.graphics()
-                .lineStyle(2, 0xffffff, 0.46)
+                .lineStyle(3, 0xffffff, 0.2)
                 .lineBetween(source.x, source.y, target.x, target.y);
             s.time.delayedCall(75 + i * 20, () => beam.destroy());
             s.collisionManager.hitEnemy(target, Math.floor(playerStats.lightningDamage * 0.45), 'lightning');
