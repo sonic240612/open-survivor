@@ -290,6 +290,7 @@ class EnemyManager {
             const b = s.enemyBullets.create(boss.x, boss.y, 'enemy_bullet_tex');
             b.setDepth(11);
             b.setAlpha(0.85);
+            b.setRotation(a);
             b.setTint(boss.bossPhase >= 3 ? 0xff6666 : (boss.bossPhase === 2 ? 0xffaa44 : 0xff7aa8));
             if (b.body) s.physics.velocityFromRotation(a, speed, b.body.velocity);
         }
@@ -514,6 +515,7 @@ class EnemyManager {
         shot.setDepth(11);
         shot.setAlpha(0.78);
         const ang = Phaser.Math.Angle.Between(enemy.x, enemy.y, 400, 300);
+        shot.setRotation(ang);
         s.physics.velocityFromRotation(ang, 275, shot.body.velocity);
         enemy.lastShot = now;
         gameState.lastShooterFire = now;

@@ -27,7 +27,12 @@ class MainScene extends Phaser.Scene {
         this.createGemTexture(g, 'gem_purple', 0xff66ff, 20);
         this.createGemTexture(g, 'gem_gold', 0xffe76a, 24);
         createTex('b_tex', 12, 0xffffff, true);
-        createTex('enemy_bullet_tex', 10, 0xff7aa8);
+        g.clear();
+        g.fillStyle(0xff3333, 1);
+        g.fillTriangle(7, 0, 14, 7, 7, 14);
+        g.fillTriangle(7, 0, 0, 7, 7, 14);
+        g.generateTexture('enemy_bullet_tex', 14, 14);
+        g.clear();
         this.createSwordTexture(g, 'sword_tex', 0xffffff, 0xeaf7ff, 0xffffff);
         this.createSwordTexture(g, 'plasma_sword_tex', 0x72f7ff, 0xdffcff, 0x72f7ff);
         createTex('spark_tex', 4, 0xffffff);
