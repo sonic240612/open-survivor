@@ -19,6 +19,12 @@ class WeaponManager {
                 b.setTint(playerStats.railgun ? 0x72f7ff : 0xffffff);
                 b.setDisplaySize(playerStats.railgun ? 22 : 12, playerStats.railgun ? 6 : 4);
                 s.physics.velocityFromRotation(ang, playerStats.railgun ? 820 : 650, b.body.velocity);
+                const trailLen = playerStats.railgun ? 16 : 10;
+                const trailSpacing = playerStats.railgun ? 5 : 4;
+                b.trailGfx = s.add.graphics().setDepth(1);
+                b.trailPoints = [];
+                b.trailColor = playerStats.railgun ? 0x72f7ff : 0xffffff;
+                b.on('destroy', () => { if (b.trailGfx) b.trailGfx.destroy(); });
                 gameState.lastFired = time + playerStats.bulletFireRate;
             }
         }
