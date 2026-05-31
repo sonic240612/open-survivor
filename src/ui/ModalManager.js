@@ -31,7 +31,6 @@ class ModalManager {
             { name: '화력 상향', desc: '총 공격력 +15', weight: 1, fn: () => { playerStats.bulletDamage += 15; playerStats.bulletDamageLevel++; } },
             { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 3, fn: () => playerStats.lightningCount++ },
             { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 2, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } },
-            { name: '바이탈 코어', desc: '최대 체력 +20 및 체력 20 회복', weight: 2, fn: () => { playerStats.maxHp += 20; playerStats.maxHpLevel++; playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 20); scene.uiManager.updateHPUI(); } },
             { name: '긴급 복구', desc: '체력 60% 즉시 복구', weight: 2, fn: () => { playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 60); scene.uiManager.updateHPUI(); } }
         ];
         if (playerStats.swordCount < 6) {

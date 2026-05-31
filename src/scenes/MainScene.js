@@ -20,6 +20,11 @@ class MainScene extends Phaser.Scene {
         this.createEnemyTexture(g, 'splitter_tex', 0xffc857, 'splitter');
         this.createEnemyTexture(g, 'shooter_tex', 0x7dd3fc, 'shooter');
         this.createEnemyTexture(g, 'buffer_tex', 0x64ff9a, 'buffer');
+        this.createEnemyTexture(g, 'elite_runner_tex', 0xff2266, 'runner');
+        this.createEnemyTexture(g, 'elite_tanker_tex', 0xcc44ff, 'tanker');
+        this.createEnemyTexture(g, 'elite_splitter_tex', 0xffee44, 'splitter');
+        this.createEnemyTexture(g, 'elite_shooter_tex', 0x44eeff, 'shooter');
+        createTex('elite_normal_tex', 40, 0xff6600);
         createTex('miniboss_tex', 64, CONSTANTS.COLORS.MINIBOSS);
         createTex('boss_tex', 80, CONSTANTS.COLORS.BOSS);
         this.createGemTexture(g, 'gem_cyan', 0x00ffff, 16);

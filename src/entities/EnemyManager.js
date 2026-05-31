@@ -22,7 +22,9 @@ class EnemyManager {
         const config = s.enemyManager.getEnemyConfig(enemyType);
         const isElite = !config.noElite && Math.random() * 100 < Math.min(24, 4 + Math.floor(mins) * 3.8);
 
-        const e = s.enemies.create(x, y, isElite ? 'elite_tex' : config.tex);
+        const eliteKey = `elite_${enemyType}_tex`;
+        const tex = isElite ? (s.textures.exists(eliteKey) ? eliteKey : 'elite_tex') : config.tex;
+        const e = s.enemies.create(x, y, tex);
         const ts = isElite ? Math.floor(config.size * 1.25) : config.size;
         e.setDisplaySize(ts, ts);
 
@@ -255,14 +257,14 @@ class EnemyManager {
                 weights.charge = 50; weights.bulletRing = 15; weights.summon = 35;
                 break;
             case 'artillery':
-                weights.bulletRing = 40; weights.laser = 30; weights.summon = 15; weights.radialBurst = 15;
+                weights.bulletRing = 25; weights.laser = 45; weights.summon = 10; weights.radialBurst = 20;
                 break;
             case 'summoner':
                 weights.summon = 45; weights.bulletRing = 15; weights.radialBurst = 30;
                 break;
         }
 
-        if (boss.bossPhase < 2) { weights.laser = 0; weights.radialBurst = 0; }
+        if (boss.bossPhase < 2) { weights.radialBurst = 0; }
 
         if (boss.isMiniBoss) {
             weights.laser = 0;
@@ -575,11 +577,13 @@ class EnemyManager {
     pickEnemyType(mins) {
         const pool = mins < 3
             ? ['normal', 'normal', 'runner', 'runner', 'splitter']
-            : mins < 7
+            : mins < 5
                 ? ['normal', 'runner', 'runner', 'tanker', 'splitter', 'splitter']
-                : mins < 12
-                    ? ['runner', 'runner', 'tanker', 'splitter', 'splitter', 'shooter', 'buffer']
-                    : ['runner', 'tanker', 'tanker', 'splitter', 'shooter', 'shooter', 'buffer'];
+                : mins < 7
+                    ? ['normal', 'runner', 'runner', 'tanker', 'splitter', 'splitter', 'shooter']
+                    : mins < 12
+                        ? ['runner', 'runner', 'tanker', 'splitter', 'splitter', 'shooter', 'buffer']
+                        : ['runner', 'tanker', 'tanker', 'splitter', 'shooter', 'shooter', 'buffer'];
         return Phaser.Utils.Array.GetRandom(pool);
     }
 
@@ -587,7 +591,7 @@ class EnemyManager {
         const configs = {
             normal: { tex: 'e_tex', size: 32, hp: CONSTANTS.BASE_ENEMY_HP + 3, speedMult: 1.08, expBonus: 0 },
             runner: { tex: 'runner_tex', size: 30, hp: 10, speedMult: 1.58, expBonus: 1 },
-            tanker: { tex: 'tanker_tex', size: 48, hp: 52, speedMult: 0.66, expBonus: 5 },
+            tanker: { tex: 'tanker_tex', size: 48, hp: 156, speedMult: 0.66, expBonus: 5 },
             splitter: { tex: 'splitter_tex', size: 36, hp: 25, speedMult: 1.02, expBonus: 3 },
             shooter: { tex: 'shooter_tex', size: 36, hp: 24, speedMult: 0.82, expBonus: 4 },
             buffer: { tex: 'buffer_tex', size: 40, hp: 38, speedMult: 0.76, expBonus: 6, noElite: true }

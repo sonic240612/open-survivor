@@ -56,19 +56,35 @@ class UIManager {
     }
 
     updateWeaponDashboard() {
+        this.updateLeftSidebar();
+    }
+
+    updateLeftSidebar() {
         const setText = (id, value) => { const el = document.getElementById(id); if (el) el.innerText = value; };
-        const weaponTypes = [playerStats.railgun ? '레일건' : '자동 소총'];
-        if (playerStats.lightningCount > 0) weaponTypes.push(playerStats.stormCaller ? '스톰 콜러' : '낙뢰');
-        if (playerStats.swordCount > 0) weaponTypes.push(playerStats.plasmaBlade ? '플라즈마 블레이드' : '에너지 블레이드');
-        setText('weapon-types', weaponTypes.join(' / '));
-        setText('weapon-fire-rate', `${(1000 / playerStats.bulletFireRate).toFixed(2)}/s`);
-        setText('weapon-damage', playerStats.bulletDamage.toLocaleString());
-        setText('weapon-lightning', `${playerStats.lightningCount}개`);
-        setText('weapon-swords', `${playerStats.swordCount}개`);
-        setText('reinf-fire-rate', `Lv.${playerStats.fireRateLevel}`);
-        setText('reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
-        setText('reinf-maxhp', `Lv.${playerStats.maxHpLevel}`);
-        setText('reinf-magnet', `Lv.${playerStats.magnetLevel}`);
+        const setDisplay = (id, show) => { const el = document.getElementById(id); if (el) el.style.display = show ? '' : 'none'; };
+
+        const isRailgun = playerStats.railgun;
+        setText('weapon-primary-name', isRailgun ? '레일건' : '자동 소총');
+        setText('weapon-primary-icon', isRailgun ? '🔱' : '🔫');
+        setText('left-reinf-fire-rate', `Lv.${playerStats.fireRateLevel}`);
+        setText('left-reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
+        setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
+
+        const hasLightning = playerStats.lightningCount > 0;
+        setDisplay('weapon-lightning-card', hasLightning);
+        if (hasLightning) {
+            setText('weapon-lightning-name', playerStats.stormCaller ? '스톰 콜러' : '낙뢰');
+            setText('weapon-lightning-icon', playerStats.stormCaller ? '🌩️' : '⚡');
+            setText('left-lightning-count', `Lv.${playerStats.lightningCount}`);
+        }
+
+        const hasSword = playerStats.swordCount > 0;
+        setDisplay('weapon-sword-card', hasSword);
+        if (hasSword) {
+            setText('weapon-sword-name', playerStats.plasmaBlade ? '플라즈마 블레이드' : '에너지 블레이드');
+            setText('weapon-sword-icon', playerStats.plasmaBlade ? '💠' : '🗡️');
+            setText('left-sword-count', `Lv.${playerStats.swordCount}`);
+        }
     }
 
     showAlert(txt) {

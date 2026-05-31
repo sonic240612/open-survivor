@@ -561,6 +561,112 @@
             background: rgba(114, 247, 255, 0.3);
         }
 
+        #left-sidebar {
+            width: 286px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            overflow-y: auto;
+            padding-right: 4px;
+            height: calc(600px + 50px);
+            flex-shrink: 0;
+        }
+
+        #left-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #left-sidebar::-webkit-scrollbar-thumb {
+            border-radius: 999px;
+            background: rgba(114, 247, 255, 0.3);
+        }
+
+        .weapon-icon-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .weapon-icon-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            transition: 0.2s;
+        }
+
+        .weapon-icon-card:hover {
+            border-color: rgba(0, 255, 176, 0.4);
+            background: rgba(0, 255, 176, 0.06);
+        }
+
+        .weapon-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(114, 247, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .weapon-icon-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .weapon-icon-name {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .weapon-icon-level {
+            font-size: 0.88rem;
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        .weapon-icon-level .level-badge {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 999px;
+            background: rgba(114, 247, 255, 0.12);
+            border: 1px solid rgba(114, 247, 255, 0.2);
+            font-size: 0.72rem;
+            color: var(--cyan);
+        }
+
+        .weapon-sub-items {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 6px;
+        }
+
+        .weapon-sub-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 6px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .weapon-sub-item .level-badge {
+            font-size: 0.62rem;
+            padding: 0 5px;
+        }
+
         .card {
             flex-shrink: 0;
             padding: 16px;
@@ -669,6 +775,50 @@
 
 <body>
     <div id="main-layout">
+        <div id="left-sidebar">
+            <div class="card">
+                <h3>⚔️ 무기고</h3>
+                <div class="weapon-icon-grid" id="weapon-list">
+                    <div class="weapon-icon-card" id="weapon-primary-card">
+                        <div class="weapon-icon" id="weapon-primary-icon">🔫</div>
+                        <div class="weapon-icon-info">
+                            <div class="weapon-icon-name" id="weapon-primary-name">자동 소총</div>
+                            <div class="weapon-sub-items">
+                                <div class="weapon-sub-item">
+                                    <span>연사 강화</span>
+                                    <span class="level-badge" id="left-reinf-fire-rate">Lv.0</span>
+                                </div>
+                                <div class="weapon-sub-item">
+                                    <span>화력 강화</span>
+                                    <span class="level-badge" id="left-reinf-damage">Lv.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weapon-icon-card" id="weapon-lightning-card">
+                        <div class="weapon-icon" id="weapon-lightning-icon">⚡</div>
+                        <div class="weapon-icon-info">
+                            <div class="weapon-icon-name" id="weapon-lightning-name">낙뢰</div>
+                            <div class="weapon-icon-level"><span class="level-badge" id="left-lightning-count">Lv.0</span></div>
+                        </div>
+                    </div>
+                    <div class="weapon-icon-card" id="weapon-sword-card">
+                        <div class="weapon-icon" id="weapon-sword-icon">🗡️</div>
+                        <div class="weapon-icon-info">
+                            <div class="weapon-icon-name" id="weapon-sword-name">에너지 블레이드</div>
+                            <div class="weapon-icon-level"><span class="level-badge" id="left-sword-count">Lv.0</span></div>
+                        </div>
+                    </div>
+                    <div class="weapon-icon-card" id="weapon-magnet-card">
+                        <div class="weapon-icon">🧲</div>
+                        <div class="weapon-icon-info">
+                            <div class="weapon-icon-name">자기장 증폭</div>
+                            <div class="weapon-icon-level"><span class="level-badge" id="left-reinf-magnet">Lv.0</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="game-wrapper">
             <div class="stats-bar">
                 <div id="timer">00:00</div>
@@ -712,24 +862,6 @@
         </div>
 
         <div id="sidebar">
-            <div class="card" id="weapon-panel">
-                <h3>무기 현황</h3>
-                <div class="weapon-grid">
-                    <div class="weapon-row"><span>보유 무기</span><strong id="weapon-types">자동 소총</strong></div>
-                    <div class="weapon-row"><span>연사 속도</span><strong id="weapon-fire-rate">1.18/s</strong></div>
-                    <div class="weapon-row"><span>공격력</span><strong id="weapon-damage">10</strong></div>
-                    <div class="weapon-row"><span>번개 수</span><strong id="weapon-lightning">0</strong></div>
-                    <div class="weapon-row"><span>블레이드 수</span><strong id="weapon-swords">0</strong></div>
-                </div>
-                <h3 style="margin-top:12px; font-size:0.85rem;">강화 레벨</h3>
-                <div class="weapon-grid">
-                    <div class="weapon-row"><span>연사 강화</span><strong id="reinf-fire-rate">Lv.0</strong></div>
-                    <div class="weapon-row"><span>화력 상향</span><strong id="reinf-damage">Lv.0</strong></div>
-                    <div class="weapon-row"><span>바이탈 코어</span><strong id="reinf-maxhp">Lv.0</strong></div>
-                    <div class="weapon-row"><span>자기장 증폭</span><strong id="reinf-magnet">Lv.0</strong></div>
-                </div>
-            </div>
-
             <div class="card">
                 <h3>스킨 모듈</h3>
                 <label>👤 플레이어 스킨</label>
