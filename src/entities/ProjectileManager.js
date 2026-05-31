@@ -10,6 +10,7 @@ class ProjectileManager {
 
     updateProjectiles(dx, dy, dt) {
         const s = this.scene;
+        const hw = CONSTANTS.WORLD_WIDTH / 2, hh = CONSTANTS.WORLD_HEIGHT / 2;
         [s.bullets, s.enemyBullets, s.gems].forEach(grp => {
             grp.getChildren().forEach(obj => {
             obj.x -= dx * dt; obj.y -= dy * dt;
@@ -32,7 +33,20 @@ class ProjectileManager {
                         obj.x += Math.cos(a) * 550 * dt; obj.y += Math.sin(a) * 550 * dt;
                     }
                 }
-                if (Phaser.Math.Distance.Between(400, 300, obj.x, obj.y) > 1200) obj.destroy();
+                if (obj.x > 400 + hw) {
+                    obj.x -= CONSTANTS.WORLD_WIDTH;
+                    if (obj.trailPoints) obj.trailPoints.forEach(p => { p.x -= CONSTANTS.WORLD_WIDTH; });
+                } else if (obj.x < 400 - hw) {
+                    obj.x += CONSTANTS.WORLD_WIDTH;
+                    if (obj.trailPoints) obj.trailPoints.forEach(p => { p.x += CONSTANTS.WORLD_WIDTH; });
+                }
+                if (obj.y > 300 + hh) {
+                    obj.y -= CONSTANTS.WORLD_HEIGHT;
+                    if (obj.trailPoints) obj.trailPoints.forEach(p => { p.y -= CONSTANTS.WORLD_HEIGHT; });
+                } else if (obj.y < 300 - hh) {
+                    obj.y += CONSTANTS.WORLD_HEIGHT;
+                    if (obj.trailPoints) obj.trailPoints.forEach(p => { p.y += CONSTANTS.WORLD_HEIGHT; });
+                }
             });
         });
     }

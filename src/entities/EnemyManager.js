@@ -106,7 +106,12 @@ class EnemyManager {
                 s.hpBarGraphics.strokeCircle(e.x, e.y, 120);
             }
 
-            if (Phaser.Math.Distance.Between(400, 300, e.x, e.y) > 1300 && !e.isBoss && !e.isMiniBoss) e.destroy();
+            const hw = CONSTANTS.WORLD_WIDTH / 2;
+            const hh = CONSTANTS.WORLD_HEIGHT / 2;
+            if (e.x > 400 + hw) { e.x -= CONSTANTS.WORLD_WIDTH; if (e.body) e.body.updateFromGameObject(); }
+            else if (e.x < 400 - hw) { e.x += CONSTANTS.WORLD_WIDTH; if (e.body) e.body.updateFromGameObject(); }
+            if (e.y > 300 + hh) { e.y -= CONSTANTS.WORLD_HEIGHT; if (e.body) e.body.updateFromGameObject(); }
+            else if (e.y < 300 - hh) { e.y += CONSTANTS.WORLD_HEIGHT; if (e.body) e.body.updateFromGameObject(); }
         });
     }
 
