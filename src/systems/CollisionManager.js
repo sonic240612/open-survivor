@@ -6,6 +6,8 @@ class CollisionManager {
 
         s.physics.add.overlap(s.bullets, s.enemies, (b, e) => {
             if (!e.active || !b.active) return;
+            if (b.hitEnemies?.has(e)) return;
+            (b.hitEnemies ??= new Set()).add(e);
             s.collisionManager.hitEnemy(e, playerStats.bulletDamage, 'bullet');
             if (playerStats.railgun) {
                 b.pierceLeft = (b.pierceLeft ?? 3) - 1;

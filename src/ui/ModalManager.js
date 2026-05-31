@@ -45,7 +45,7 @@ class ModalManager {
             pool.push({ name: '플라즈마 블레이드', desc: '블레이드 타격 시 하늘색 라이트닝 추가', evolution: true, fn: () => scene.weaponManager.upgradePlasmaBlade() });
         }
         if (!playerStats.railgun && playerStats.bulletDamageLevel >= 2 && playerStats.fireRateLevel >= 5) {
-            pool.push({ name: '레일건', desc: '탄환 속도 증가 및 최대 4회 관통', evolution: true, fn: () => { playerStats.railgun = true; playerStats.bulletDamage += 20; } });
+            pool.push({ name: '레일건', desc: '탄환 속도 증가 및 최대 4회 관통', evolution: true, fn: () => { playerStats.railgun = true; playerStats.bulletDamage += 10; } });
         }
         if (!playerStats.stormCaller && playerStats.lightningCount >= 5 && playerStats.magnetLevel >= 2) {
             pool.push({ name: '스톰 콜러', desc: '낙뢰 쿨다운 감소 및 주변 적 연쇄 타격', evolution: true, fn: () => { playerStats.stormCaller = true; playerStats.lightningDamage += 15; } });
