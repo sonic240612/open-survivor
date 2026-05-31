@@ -154,7 +154,8 @@ class MainScene extends Phaser.Scene {
         playerStats.bulletDamageLevel = 0;
         playerStats.railgun = false;
         playerStats.swordCount = 0;
-        playerStats.swordDamage = 7;
+        playerStats.swordDamage = 1;
+        playerStats.swordDamageLevel = 0;
         playerStats.plasmaBlade = false;
         playerStats.lightningCount = 0;
         playerStats.lightningDamage = 45;

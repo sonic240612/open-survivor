@@ -27,19 +27,24 @@ class ModalManager {
         container.innerHTML = '';
 
         const pool = [
-            { name: '연사 강화', desc: '총 연사 속도 20% 증가', weight: 1, fn: () => { playerStats.bulletFireRate *= 0.8; playerStats.fireRateLevel++; } },
-            { name: '화력 상향', desc: '총 공격력 +15', weight: 1, fn: () => { playerStats.bulletDamage += 15; playerStats.bulletDamageLevel++; } },
-            { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 3, fn: () => playerStats.lightningCount++ },
-            { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 2, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } },
-            { name: '긴급 복구', desc: '체력 60% 즉시 복구', weight: 2, fn: () => { playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 60); scene.uiManager.updateHPUI(); } }
+            { name: '연사 강화', desc: '총 연사 속도 12% 증가', weight: 1, fn: () => { playerStats.bulletFireRate *= 0.88; playerStats.fireRateLevel++; } },
+            { name: '화력 상향', desc: '총 공격력 +5', weight: 1, fn: () => { playerStats.bulletDamage += 5; playerStats.bulletDamageLevel++; } },
+            { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 1, fn: () => playerStats.lightningCount++ },
+            { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 1, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } }
         ];
+        if (playerStats.hp < playerStats.maxHp) {
+            pool.push({ name: '긴급 복구', desc: '체력 60% 즉시 복구', weight: 1, fn: () => { playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 60); scene.uiManager.updateHPUI(); } });
+        }
         if (playerStats.swordCount < 6) {
             pool.push({ name: '에너지 블레이드', desc: '공전하는 블레이드 추가 (최대 6개)', fn: () => scene.weaponManager.addOrbitalSword() });
+        }
+        if (playerStats.swordCount > 0) {
+            pool.push({ name: '블레이드 강화', desc: '블레이드 공격력 +1', fn: () => { playerStats.swordDamage++; playerStats.swordDamageLevel++; } });
         }
         if (!playerStats.plasmaBlade && playerStats.swordCount >= 6 && playerStats.lightningCount >= 3) {
             pool.push({ name: '플라즈마 블레이드', desc: '블레이드 타격 시 하늘색 라이트닝 추가', evolution: true, fn: () => scene.weaponManager.upgradePlasmaBlade() });
         }
-        if (!playerStats.railgun && playerStats.bulletDamageLevel >= 3 && playerStats.fireRateLevel >= 3) {
+        if (!playerStats.railgun && playerStats.bulletDamageLevel >= 2 && playerStats.fireRateLevel >= 5) {
             pool.push({ name: '레일건', desc: '탄환 속도 증가 및 최대 4회 관통', evolution: true, fn: () => { playerStats.railgun = true; playerStats.bulletDamage += 20; } });
         }
         if (!playerStats.stormCaller && playerStats.lightningCount >= 5 && playerStats.magnetLevel >= 2) {

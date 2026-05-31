@@ -83,7 +83,8 @@ class UIManager {
         if (hasSword) {
             setText('weapon-sword-name', playerStats.plasmaBlade ? '플라즈마 블레이드' : '에너지 블레이드');
             setText('weapon-sword-icon', playerStats.plasmaBlade ? '💠' : '🗡️');
-            setText('left-sword-count', `Lv.${playerStats.swordCount}`);
+            setText('left-sword-count', `${playerStats.swordCount}개`);
+            setText('left-sword-damage-lv', `Lv.${playerStats.swordDamageLevel}`);
         }
     }
 

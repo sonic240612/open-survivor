@@ -26,7 +26,7 @@ const CONSTANTS = {
 const playerStats = {
     hp: 100, maxHp: 100, currentExp: 0, nextLevelExp: 10, currentLevel: 1,
     bulletFireRate: 850, bulletDamage: 10, fireRateLevel: 0, bulletDamageLevel: 0,
-    railgun: false, swordCount: 0, swordDamage: 7, plasmaBlade: false,
+    railgun: false, swordCount: 0, swordDamage: 1, swordDamageLevel: 0, plasmaBlade: false,
     lightningCount: 0, lightningDamage: 45, stormCaller: false, magnetLevel: 0, magnetRange: 140, maxHpLevel: 0,
     moveSpeed: CONSTANTS.PLAYER_BASE_SPEED
 };
