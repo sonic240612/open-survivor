@@ -132,13 +132,13 @@ class EnemyManager {
     }
 
     getBossMaxHP(sec, bossType) {
-        const base = 12000 + (sec / 60) * 3500;
+        const base = 17000 + (sec / 60) * 5000;
         const mult = bossType === 'berserker' ? 0.8 : bossType === 'artillery' ? 1.2 : 1.0;
         return Math.floor(base * mult);
     }
 
     getMiniBossMaxHP(sec) {
-        return 3000 + (sec / 60) * 800;
+        return 4200 + (sec / 60) * 1100;
     }
 
     spawnSpecialEnemy(tex, isBoss) {

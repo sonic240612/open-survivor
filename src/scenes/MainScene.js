@@ -203,6 +203,7 @@ class MainScene extends Phaser.Scene {
         gameState.gameTime += delta;
         const totalSec = Math.floor(gameState.gameTime / 1000);
         this.uiManager.updateTimerUI(totalSec);
+        this.uiManager.updateScoreUI();
         this.uiManager.updateWeaponDashboard();
 
         this.enemyManager.checkBossEvents(totalSec);

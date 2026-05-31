@@ -41,6 +41,7 @@ class CollisionManager {
 
     hitEnemy(enemy, damage, type) {
         if (!enemy.active) return;
+        if (enemy.hp <= 0) return;
         const s = this.scene;
         enemy.hp -= damage;
 
@@ -59,6 +60,7 @@ class CollisionManager {
         if (enemy.hp <= 0) {
             s.effectsManager.emitHitSpark(enemy.x, enemy.y, 16);
             s.enemyManager.onEnemyDeath(enemy);
+            s.uiManager.updateKillsUI();
         }
     }
 

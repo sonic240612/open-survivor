@@ -22,6 +22,7 @@ class UIManager {
         updateWidth('exp-fill', '0%');
         updateWidth('hp-fill', '100%');
         updateText('timer', '00:00');
+        this.updateKillsUI();
         this.updateWeaponDashboard();
         const gameOverModal = document.getElementById('game-over-modal');
         if (gameOverModal) gameOverModal.style.display = 'none';
@@ -32,6 +33,21 @@ class UIManager {
         const s = (sec % 60).toString().padStart(2, '0');
         const el = document.getElementById('timer');
         if (el) el.innerText = `${m}:${s}`;
+    }
+
+    updateKillsUI() {
+        const el = document.getElementById('kills');
+        if (el) el.innerText = `💀 ${gameState.enemiesKilled}`;
+        this.updateScoreUI();
+    }
+
+    updateScoreUI() {
+        const el = document.getElementById('score');
+        if (el) {
+            const timeSec = Math.floor(gameState.gameTime / 1000);
+            const score = (timeSec * 15) + (gameState.enemiesKilled * 60);
+            el.innerText = `★ ${score.toLocaleString()}`;
+        }
     }
 
     updateHPUI() {
@@ -49,6 +65,10 @@ class UIManager {
         setText('weapon-damage', playerStats.bulletDamage.toLocaleString());
         setText('weapon-lightning', `${playerStats.lightningCount}개`);
         setText('weapon-swords', `${playerStats.swordCount}개`);
+        setText('reinf-fire-rate', `Lv.${playerStats.fireRateLevel}`);
+        setText('reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
+        setText('reinf-maxhp', `Lv.${playerStats.maxHpLevel}`);
+        setText('reinf-magnet', `Lv.${playerStats.magnetLevel}`);
     }
 
     showAlert(txt) {

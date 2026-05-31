@@ -59,25 +59,11 @@
         }
 
         #timer {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            z-index: 10;
-            text-shadow: 2px 2px 4px #000;
             color: #fff;
         }
 
         #level {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
             color: #00ffff;
-            z-index: 10;
-            text-shadow: 2px 2px 4px #000;
             cursor: pointer;
             user-select: none;
         }
@@ -346,9 +332,48 @@
             box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(18px) saturate(140%);
             -webkit-backdrop-filter: blur(18px) saturate(140%);
+            max-height: calc(100vh - 40px);
+            overflow: hidden;
+        }
+
+        #game-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            padding: 6px 16px;
+            justify-content: center;
+            width: 800px;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        .stats-bar > * {
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: rgba(5, 11, 19, 0.56);
+            border: 1px solid rgba(114, 247, 255, 0.26);
+            text-shadow: 0 0 8px rgba(114, 247, 255, 0.42);
+            box-shadow: 0 0 10px rgba(114, 247, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 0.9rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .stats-bar #level {
+            color: var(--cyan);
         }
 
         #game-container {
+            width: 800px;
+            height: 600px;
             border: 1px solid rgba(114, 247, 255, 0.4);
             border-radius: 14px;
             background: #03080d;
@@ -383,24 +408,6 @@
             border-radius: 999px;
             background: linear-gradient(90deg, var(--cyan), var(--mint), var(--gold));
             box-shadow: 0 0 10px rgba(0, 255, 176, 0.34);
-        }
-
-        #timer,
-        #level {
-            top: 38px;
-            padding: 8px 12px;
-            border-radius: 999px;
-            background: rgba(5, 11, 19, 0.56);
-            border: 1px solid rgba(114, 247, 255, 0.26);
-            color: var(--text-main);
-            text-shadow: 0 0 8px rgba(114, 247, 255, 0.42);
-            box-shadow: 0 0 10px rgba(114, 247, 255, 0.08);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        #level {
-            color: var(--cyan);
         }
 
         #hp-bar-outer {
@@ -539,9 +546,10 @@
         #sidebar {
             width: 286px;
             gap: 14px;
-            height: 600px;
             overflow-y: auto;
             padding-right: 4px;
+            height: calc(600px + 50px);
+            flex-shrink: 0;
         }
 
         #sidebar::-webkit-scrollbar {
@@ -661,12 +669,17 @@
 
 <body>
     <div id="main-layout">
-        <div id="game-container">
+        <div id="game-wrapper">
+            <div class="stats-bar">
+                <div id="timer">00:00</div>
+                <div id="kills">💀 0</div>
+                <div id="score">★ 0</div>
+                <div id="level">Lv. 1</div>
+            </div>
+            <div id="game-container">
             <div id="exp-bar">
                 <div id="exp-fill"></div>
             </div>
-            <div id="timer">00:00</div>
-            <div id="level">Lv. 1</div>
             <div id="hp-bar-outer">
                 <div id="hp-fill"></div>
             </div>
@@ -695,6 +708,7 @@
                     <button id="restart-btn">다시 시작</button>
                 </div>
             </div>
+            </div>
         </div>
 
         <div id="sidebar">
@@ -706,6 +720,13 @@
                     <div class="weapon-row"><span>공격력</span><strong id="weapon-damage">10</strong></div>
                     <div class="weapon-row"><span>번개 수</span><strong id="weapon-lightning">0</strong></div>
                     <div class="weapon-row"><span>블레이드 수</span><strong id="weapon-swords">0</strong></div>
+                </div>
+                <h3 style="margin-top:12px; font-size:0.85rem;">강화 레벨</h3>
+                <div class="weapon-grid">
+                    <div class="weapon-row"><span>연사 강화</span><strong id="reinf-fire-rate">Lv.0</strong></div>
+                    <div class="weapon-row"><span>화력 상향</span><strong id="reinf-damage">Lv.0</strong></div>
+                    <div class="weapon-row"><span>바이탈 코어</span><strong id="reinf-maxhp">Lv.0</strong></div>
+                    <div class="weapon-row"><span>자기장 증폭</span><strong id="reinf-magnet">Lv.0</strong></div>
                 </div>
             </div>
 
