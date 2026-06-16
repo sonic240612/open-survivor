@@ -168,6 +168,10 @@ class MainScene extends Phaser.Scene {
         playerStats.magnetLevel = 0;
         playerStats.magnetRange = 140;
         playerStats.maxHpLevel = 0;
+        playerStats.critChance = 0;
+        playerStats.critMultiplier = 1.25;
+        playerStats.critLevel = 0;
+        playerStats.critDamageLevel = 0;
         playerStats.moveSpeed = CONSTANTS.PLAYER_BASE_SPEED;
         gameState.gameTime = 0;
         gameState.lastFired = 0;

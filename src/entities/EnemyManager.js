@@ -292,11 +292,12 @@ class EnemyManager {
     executeBulletRing(boss) {
         const s = this.scene;
         const count = (boss.isMiniBoss ? 6 : 8) + (boss.bossPhase - 1) * 2;
-        const speed = 180 + boss.bossPhase * 25;
+        const speed = 350;
 
         for (let i = 0; i < count; i++) {
             const a = (Math.PI * 2 / count) * i + Math.random() * 0.15;
             const b = s.enemyBullets.create(boss.x, boss.y, 'enemy_bullet_tex');
+            b.spawnTime = s.time.now;
             b.setDepth(11);
             b.setAlpha(0.85);
             b.setRotation(a);

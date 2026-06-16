@@ -32,6 +32,9 @@ class ModalManager {
             { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 1, fn: () => playerStats.lightningCount++ },
             { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 1, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } }
         ];
+        if (playerStats.critChance < 0.9) {
+            pool.push({ name: '치명타 강화', desc: '치명타 확률 +3% (최대 90%)', weight: 1, fn: () => { playerStats.critChance = Math.min(0.9, playerStats.critChance + 0.03); playerStats.critLevel++; } });
+        }
         if (playerStats.swordCount < 6) {
             pool.push({ name: '에너지 블레이드', desc: '공전하는 블레이드 추가 (최대 6개)', fn: () => scene.weaponManager.addOrbitalSword() });
         }
@@ -46,6 +49,9 @@ class ModalManager {
         }
         if (!playerStats.stormCaller && playerStats.lightningCount >= 5 && playerStats.magnetLevel >= 2) {
             pool.push({ name: '스톰 콜러', desc: '낙뢰 쿨다운 감소 및 주변 적 연쇄 타격', evolution: true, fn: () => { playerStats.stormCaller = true; playerStats.lightningDamage += 15; } });
+        }
+        if (playerStats.critLevel >= 5 && playerStats.critMultiplier + playerStats.critDamageLevel * 0.05 < 1.5) {
+            pool.push({ name: '치명타 데미지 강화', desc: '치명타 배율 +5% (최대 ×1.50)', weight: 1, fn: () => { playerStats.critDamageLevel++; } });
         }
 
         const weightedPick = (arr, n) => {

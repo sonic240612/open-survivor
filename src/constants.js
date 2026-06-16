@@ -30,6 +30,7 @@ const playerStats = {
     bulletFireRate: 850, bulletDamage: 10, fireRateLevel: 0, bulletDamageLevel: 0,
     railgun: false, swordCount: 0, swordDamage: 1, swordDamageLevel: 0, plasmaBlade: false,
     lightningCount: 0, lightningDamage: 45, stormCaller: false, magnetLevel: 0, magnetRange: 140, maxHpLevel: 0,
+    critChance: 0, critMultiplier: 1.25, critLevel: 0, critDamageLevel: 0,
     moveSpeed: CONSTANTS.PLAYER_BASE_SPEED
 };
 

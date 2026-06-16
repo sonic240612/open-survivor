@@ -70,6 +70,11 @@ class UIManager {
         setText('left-reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
         setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
 
+        setText('left-crit-chance', `${Math.round(playerStats.critChance * 100)}%`);
+        const critMult = Math.min(1.5, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
+        setText('left-crit-damage', `×${critMult.toFixed(2)}`);
+        setDisplay('left-crit-damage-row', playerStats.critLevel >= 5);
+
         const hasLightning = playerStats.lightningCount > 0;
         setDisplay('weapon-lightning-card', hasLightning);
         if (hasLightning) {

@@ -53,6 +53,12 @@ class CollisionManager {
         if (!enemy.active) return;
         if (enemy.hp <= 0) return;
         const s = this.scene;
+        let isCrit = false;
+        if (playerStats.critChance > 0 && Math.random() < playerStats.critChance) {
+            const mult = Math.min(1.5, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
+            damage = Math.floor(damage * mult);
+            isCrit = true;
+        }
         enemy.hp -= damage;
 
         let color = '#ffffff';
@@ -60,7 +66,7 @@ class CollisionManager {
         else if (type === 'sword') color = '#e0e0e0';
         else if (type === 'lightning') color = '#ffffff';
         else if (type === 'plasma') color = '#72f7ff';
-        s.effectsManager.showDamageNumber(enemy.x, enemy.y, damage, color);
+        s.effectsManager.showDamageNumber(enemy.x, enemy.y, damage, color, isCrit);
 
         enemy.setTintFill(0xffffff);
         s.time.delayedCall(80, () => { if (enemy.active) enemy.clearTint(); });

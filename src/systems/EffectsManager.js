@@ -16,12 +16,12 @@ class EffectsManager {
         this.scene.sparkEmitter.emitParticleAt(x, y, count);
     }
 
-    showDamageNumber(x, y, amount, color) {
+    showDamageNumber(x, y, amount, color, isCrit) {
         const s = this.scene;
         const txt = s.add.text(x + Phaser.Math.Between(-12, 12), y - 12, amount, {
             fontSize: '18px',
             fontFamily: CONSTANTS.FONT_FAMILY,
-            color: color || '#ffffff',
+            color: isCrit ? '#ffdd00' : (color || '#ffffff'),
             fontWeight: 'bold',
             stroke: '#000000',
             strokeThickness: 3
@@ -31,7 +31,7 @@ class EffectsManager {
             targets: txt,
             y: txt.y - 45,
             alpha: 0,
-            scale: 1.3,
+            scale: isCrit ? 1.25 : 1.3,
             duration: 500,
             onComplete: () => txt.destroy()
         });
