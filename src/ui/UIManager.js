@@ -34,6 +34,7 @@ class UIManager {
         this.updateWeaponDashboard();
         const gameOverModal = document.getElementById('game-over-modal');
         if (gameOverModal) gameOverModal.style.display = 'none';
+        if (typeof updateLeaderboardUI === 'function') updateLeaderboardUI();
     }
 
     updateTimerUI(sec) {

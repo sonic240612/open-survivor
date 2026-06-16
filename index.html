@@ -880,6 +880,11 @@
                 <div class="modal-panel">
                     <h1 class="modal-title danger">게임 오버</h1>
                     <div id="final-stats" style="text-align: center; color: #cdd8e2; line-height: 1.8; margin: 20px 0;"></div>
+                    <div id="score-submit-area" style="margin:12px 0;text-align:center;display:none">
+                        <input type="text" id="player-name-input" maxlength="10" placeholder="이름 입력..." style="background:#111;border:1px solid #72f7ff55;color:#eee;padding:6px 10px;border-radius:6px;width:140px;font-size:14px;text-align:center">
+                        <button id="score-submit-btn" style="background:#00ff8844;border:1px solid #00ff88;color:#fff;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;margin-left:6px">랭킹 등록</button>
+                        <div id="rank-result" style="margin-top:6px;font-size:13px;color:#ffdd00"></div>
+                    </div>
                     <button id="restart-btn">다시 시작</button>
                 </div>
             </div>
@@ -887,6 +892,11 @@
         </div>
 
         <div id="sidebar">
+            <div class="card">
+                <h3>🏆 랭킹</h3>
+                <div id="leaderboard-list" style="font-size:0.78rem;color:var(--text-muted);line-height:1.8"></div>
+            </div>
+
             <div class="card">
                 <h3>스킨 모듈</h3>
                 <label>👤 플레이어 스킨</label>
@@ -937,6 +947,7 @@
     <script src="src/ui/ModalManager.js"></script>
     <script src="src/ui/AdminConsole.js"></script>
     <script src="src/ui/SkinUploader.js"></script>
+    <script src="src/api/leaderboard.js"></script>
     <script src="src/scenes/StartScene.js"></script>
     <script src="src/scenes/MainScene.js"></script>
     <script src="src/game.js"></script>

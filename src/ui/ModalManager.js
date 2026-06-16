@@ -123,6 +123,30 @@ class ModalManager {
             }
             statsEl.innerHTML = html;
         }
+        const submitArea = document.getElementById('score-submit-area');
+        if (submitArea) submitArea.style.display = 'block';
+        const nameInput = document.getElementById('player-name-input');
+        const submitBtn = document.getElementById('score-submit-btn');
+        const rankResult = document.getElementById('rank-result');
+        if (nameInput) nameInput.value = '';
+        if (rankResult) rankResult.innerText = '';
+        if (submitBtn) {
+            submitBtn.onclick = async () => {
+                const name = nameInput ? nameInput.value.trim() : '';
+                if (!name) { if (rankResult) rankResult.innerText = '이름을 입력해주세요'; return; }
+                submitBtn.disabled = true;
+                submitBtn.textContent = '등록 중...';
+                const ok = await submitScore(name, score, gameState.enemiesKilled, gameState.gameTime, playerStats.currentLevel);
+                if (ok) {
+                    if (rankResult) rankResult.innerText = '✅ 등록 완료!';
+                    if (typeof updateLeaderboardUI === 'function') updateLeaderboardUI();
+                } else {
+                    if (rankResult) rankResult.innerText = '❌ 등록 실패';
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = '랭킹 등록';
+            };
+        }
         const restartBtn = document.getElementById('restart-btn');
         if (restartBtn) restartBtn.onclick = () => scene.scene.start('MainScene');
     }
@@ -136,6 +160,30 @@ class ModalManager {
         const timerEl = document.getElementById('timer');
         const statsEl = document.getElementById('final-stats');
         if (statsEl) statsEl.innerHTML = `⏰ 보스를 제때 처치하지 못했습니다!<br><br>플레이 시간: ${timerEl ? timerEl.innerText : '00:00'}<br>제거한 적: ${gameState.enemiesKilled}<br>최종 평가 점수: ${score.toLocaleString()}`;
+        const submitArea = document.getElementById('score-submit-area');
+        if (submitArea) submitArea.style.display = 'block';
+        const nameInput = document.getElementById('player-name-input');
+        const submitBtn = document.getElementById('score-submit-btn');
+        const rankResult = document.getElementById('rank-result');
+        if (nameInput) nameInput.value = '';
+        if (rankResult) rankResult.innerText = '';
+        if (submitBtn) {
+            submitBtn.onclick = async () => {
+                const name = nameInput ? nameInput.value.trim() : '';
+                if (!name) { if (rankResult) rankResult.innerText = '이름을 입력해주세요'; return; }
+                submitBtn.disabled = true;
+                submitBtn.textContent = '등록 중...';
+                const ok = await submitScore(name, score, gameState.enemiesKilled, gameState.gameTime, playerStats.currentLevel);
+                if (ok) {
+                    if (rankResult) rankResult.innerText = '✅ 등록 완료!';
+                    if (typeof updateLeaderboardUI === 'function') updateLeaderboardUI();
+                } else {
+                    if (rankResult) rankResult.innerText = '❌ 등록 실패';
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = '랭킹 등록';
+            };
+        }
         const restartBtn = document.getElementById('restart-btn');
         if (restartBtn) restartBtn.onclick = () => scene.scene.start('MainScene');
     }
