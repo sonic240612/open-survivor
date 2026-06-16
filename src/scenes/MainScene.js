@@ -198,6 +198,20 @@ class MainScene extends Phaser.Scene {
         else this.physics.world.resume();
     }
 
+    shutdown() {
+        ['pause-btn', 'resume-btn', 'restart-btn', 'score-submit-btn', 'god-btn', 'time-btn', 'lvl-btn'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.onclick = null;
+        });
+        ['p-up', 'e-up', 'elite-up', 'miniboss-up', 'boss-up'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.onchange = null;
+        });
+        if (this.uiManager && this.uiManager.alertTimeout) {
+            clearTimeout(this.uiManager.alertTimeout);
+        }
+    }
+
     setupPauseSystem() {
         const pauseBtn = document.getElementById('pause-btn');
         const pauseModal = document.getElementById('pause-modal');

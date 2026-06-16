@@ -2,21 +2,25 @@ const SUPABASE_URL = 'https://kgkyuqpsaogypbgqnauy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_ej9QiqAwmw6IznYMzN-e6A_3W3NzYbc';
 
 async function submitScore(playerName, score, kills, playTime, level) {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
-        method: 'POST',
-        headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            player_name: playerName,
-            score,
-            kills,
-            play_time_seconds: Math.floor(playTime / 1000),
-            level,
-        })
-    });
-    return res.ok;
+    try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player_name: playerName,
+                score,
+                kills,
+                play_time_seconds: Math.floor(playTime / 1000),
+                level,
+            })
+        });
+        return res.ok;
+    } catch {
+        return false;
+    }
 }
 
 async function getTopScores(limit = 20) {

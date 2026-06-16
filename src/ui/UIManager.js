@@ -107,7 +107,8 @@ class UIManager {
         if (box) {
             box.innerText = txt;
             box.style.display = 'block';
-            setTimeout(() => box.style.display = 'none', 3000);
+            if (this.alertTimeout) clearTimeout(this.alertTimeout);
+            this.alertTimeout = setTimeout(() => { box.style.display = 'none'; }, 3000);
         }
     }
 
