@@ -562,6 +562,10 @@ class EnemyManager {
         gem.expValue = val;
         gem.setBlendMode(Phaser.BlendModes.ADD);
         gem.setAlpha(0.92);
+        const healChance = e.isBoss ? 12 : e.isMiniBoss ? 7 : e.isElite ? 3 : 1;
+        if (Math.random() * 100 < healChance) {
+            s.heals.create(e.x, e.y, 'heal_tex').setDepth(5);
+        }
         e.destroy();
     }
 

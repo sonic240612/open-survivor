@@ -41,6 +41,11 @@ class MainScene extends Phaser.Scene {
         this.createSwordTexture(g, 'sword_tex', 0xffffff, 0xeaf7ff, 0xffffff);
         this.createSwordTexture(g, 'plasma_sword_tex', 0x72f7ff, 0xdffcff, 0x72f7ff);
         createTex('spark_tex', 4, 0xffffff);
+        g.clear();
+        g.fillStyle(0x00ff44, 1);
+        g.fillRect(7, 2, 6, 16);
+        g.fillRect(2, 7, 16, 6);
+        g.generateTexture('heal_tex', 20, 20);
     }
 
     createEnemyTexture(g, key, color, type) {

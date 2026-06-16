@@ -32,9 +32,6 @@ class ModalManager {
             { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 1, fn: () => playerStats.lightningCount++ },
             { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 1, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } }
         ];
-        if (playerStats.hp < playerStats.maxHp) {
-            pool.push({ name: '긴급 복구', desc: '체력 60% 즉시 복구', weight: 1, fn: () => { playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 60); scene.uiManager.updateHPUI(); } });
-        }
         if (playerStats.swordCount < 6) {
             pool.push({ name: '에너지 블레이드', desc: '공전하는 블레이드 추가 (최대 6개)', fn: () => scene.weaponManager.addOrbitalSword() });
         }

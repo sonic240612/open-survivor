@@ -39,6 +39,14 @@ class CollisionManager {
             s.modalManager.gainExp(g.expValue);
             g.destroy();
         });
+
+        s.physics.add.overlap(s.playerSensor, s.heals, (sens, h) => {
+            if (!h.active) return;
+            playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 20);
+            s.uiManager.updateHPUI();
+            s.effectsManager.showDamageNumber(h.x, h.y, 20, '#00ff44');
+            h.destroy();
+        });
     }
 
     hitEnemy(enemy, damage, type) {

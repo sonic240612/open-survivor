@@ -6,12 +6,13 @@ class ProjectileManager {
         s.bullets = s.physics.add.group();
         s.enemyBullets = s.physics.add.group();
         s.gems = s.physics.add.group();
+        s.heals = s.physics.add.group();
     }
 
     updateProjectiles(dx, dy, dt) {
         const s = this.scene;
         const hw = CONSTANTS.WORLD_WIDTH / 2, hh = CONSTANTS.WORLD_HEIGHT / 2;
-        [s.bullets, s.enemyBullets, s.gems].forEach(grp => {
+        [s.bullets, s.enemyBullets, s.gems, s.heals].forEach(grp => {
             grp.getChildren().forEach(obj => {
             obj.x -= dx * dt; obj.y -= dy * dt;
             if (grp === s.bullets && obj.trailPoints) {
