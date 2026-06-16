@@ -42,9 +42,10 @@ class CollisionManager {
 
         s.physics.add.overlap(s.playerSensor, s.heals, (sens, h) => {
             if (!h.active) return;
-            playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 10);
+            const healAmt = Math.min(30, 9 + playerStats.currentLevel);
+            playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + healAmt);
             s.uiManager.updateHPUI();
-            s.effectsManager.showDamageNumber(h.x, h.y, 10, '#00ff44');
+            s.effectsManager.showDamageNumber(h.x, h.y, healAmt, '#00ff44');
             h.destroy();
         });
     }
