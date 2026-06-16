@@ -10,7 +10,7 @@ class CollisionManager {
             (b.hitEnemies ??= new Set()).add(e);
             s.collisionManager.hitEnemy(e, playerStats.bulletDamage, 'bullet');
             if (playerStats.railgun) {
-                b.pierceLeft = (b.pierceLeft ?? 3) - 1;
+                b.pierceLeft--;
                 if (b.pierceLeft <= 0) b.destroy();
             } else {
                 b.destroy();

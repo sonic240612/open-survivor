@@ -20,7 +20,7 @@ class PlayerManager {
         else if (s.cursors.right.isDown || s.keys.D.isDown) dx = playerStats.moveSpeed;
         if (s.cursors.up.isDown || s.keys.W.isDown) dy = -playerStats.moveSpeed;
         else if (s.cursors.down.isDown || s.keys.S.isDown) dy = playerStats.moveSpeed;
-        if (dx !== 0 && dy !== 0) { dx *= 0.7071; dy *= 0.7071; }
+        if (dx !== 0 && dy !== 0) { dx *= Math.SQRT1_2; dy *= Math.SQRT1_2; }
         gameState.worldX += dx * dt;
         gameState.worldY += dy * dt;
         s.background.tilePositionX = gameState.worldX;

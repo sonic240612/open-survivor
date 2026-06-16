@@ -305,7 +305,7 @@ class EnemyManager {
             if (b.body) s.physics.velocityFromRotation(a, speed, b.body.velocity);
         }
 
-        s.time.delayedCall(100 + boss.bossPhase * 30, () => { boss.bossAttacking = false; });
+        s.time.delayedCall(100 + boss.bossPhase * 30, () => { if (boss.active) boss.bossAttacking = false; });
     }
 
     executeCharge(boss) {
