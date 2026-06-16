@@ -26,6 +26,7 @@
 *   **게임 종료 데미지 통계:** 게임 오버 시 무기별 누적 데미지와 비율을 확인할 수 있습니다. (진화 상태 자동 반영)
 *   **보스 타임어택:** 보스/미니보스 등장 후 3분 이내에 처치하지 못하면 게임 오버됩니다. HP바 아래 카운트다운 타이머가 표시되며, 30초 미만 시 빨간색으로 경고합니다.
 *   **레벨업 체력 증가:** 레벨업할 때마다 최대 HP가 2씩 증가하여 후반 생존력을 보완합니다.
+*   **리더보드 랭킹 시스템:** Supabase REST API 기반으로 전 세계 플레이어와 점수를 겨룰 수 있습니다. 게임 오버 시 이름을 입력하여 랭킹에 등록하고, TOP 10 순위를 실시간으로 확인할 수 있습니다.
 
 ## 🎮 조작 방법 (How to Play)
 
@@ -38,10 +39,20 @@
 
 *   **Engine:** Phaser 3 (JavaScript Game Engine)
 *   **Frontend:** HTML5, CSS3, JavaScript (Vanilla)
+*   **Backend:** Supabase (PostgreSQL + REST API, 서버리스)
 *   **Deployment:** Vercel
 *   **Version Control:** GitHub
 
 ## 📋 업데이트 내역 (Changelog)
+
+### v1.0.28
+
+*   **리더보드 시스템 추가:**
+    *   Supabase REST API 기반 랭킹 시스템 도입 (`src/api/leaderboard.js`).
+    *   게임 오버 시 이름 입력 후 점수 등록 가능 (최대 10자).
+    *   우측 사이드바 상단에 TOP 10 실시간 랭킹 표시.
+    *   등록 성공 시 자동으로 랭킹 갱신.
+    *   Supabase RLS 정책으로 보안 처리 (SELECT/INSERT만 허용).
 
 ### v1.0.27
 
