@@ -519,11 +519,12 @@ class EnemyManager {
         if (dist < 220 || dist > 520) return;
 
         const shot = s.enemyBullets.create(enemy.x, enemy.y, 'enemy_bullet_tex');
+        shot.spawnTime = now;
         shot.setDepth(11);
         shot.setAlpha(0.78);
         const ang = Phaser.Math.Angle.Between(enemy.x, enemy.y, 400, 300);
         shot.setRotation(ang);
-        s.physics.velocityFromRotation(ang, 275, shot.body.velocity);
+        s.physics.velocityFromRotation(ang, 350, shot.body.velocity);
         enemy.lastShot = now;
         gameState.lastShooterFire = now;
     }

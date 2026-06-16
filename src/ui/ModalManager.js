@@ -27,7 +27,7 @@ class ModalManager {
         container.innerHTML = '';
 
         const pool = [
-            { name: '연사 강화', desc: '총 연사 속도 12% 증가', weight: 1, fn: () => { playerStats.bulletFireRate *= 0.88; playerStats.fireRateLevel++; } },
+            { name: '연사 강화', desc: '총 연사 속도 15% 증가', weight: 1, fn: () => { playerStats.bulletFireRate *= 0.85; playerStats.fireRateLevel++; } },
             { name: '화력 상향', desc: '총 공격력 +5', weight: 1, fn: () => { playerStats.bulletDamage += 5; playerStats.bulletDamageLevel++; } },
             { name: '낙뢰 폭풍', desc: '라이트닝 수 +1', weight: 1, fn: () => playerStats.lightningCount++ },
             { name: '자기장 증폭', desc: '보석 자석 범위 +70px', weight: 1, fn: () => { playerStats.magnetRange += 70; playerStats.magnetLevel++; } }

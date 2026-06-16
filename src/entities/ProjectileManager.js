@@ -33,6 +33,10 @@ class ProjectileManager {
                         obj.x += Math.cos(a) * 550 * dt; obj.y += Math.sin(a) * 550 * dt;
                     }
                 }
+                if (grp !== s.gems && obj.spawnTime && s.time.now - obj.spawnTime > 7000) {
+                    obj.destroy();
+                    return;
+                }
                 if (obj.x > 400 + hw) {
                     obj.x -= CONSTANTS.WORLD_WIDTH;
                     if (obj.trailPoints) obj.trailPoints.forEach(p => { p.x -= CONSTANTS.WORLD_WIDTH; });

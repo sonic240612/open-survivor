@@ -13,6 +13,7 @@ class WeaponManager {
             const closest = s.physics.closest(s.player, activeEnemies);
             if (closest && Phaser.Math.Distance.Between(400, 300, closest.x, closest.y) < 450) {
                 const b = s.bullets.create(400, 300, 'b_tex');
+                b.spawnTime = time;
                 const ang = Phaser.Math.Angle.Between(400, 300, closest.x, closest.y);
                 b.setRotation(ang);
                 b.pierceLeft = playerStats.railgun ? 4 : 1;
