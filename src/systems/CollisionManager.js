@@ -86,7 +86,7 @@ class CollisionManager {
         const now = s.time.now;
         if (now - gameState.lastPlayerHit < 300) return;
         gameState.lastPlayerHit = now;
-        const timeMult = 1 + Math.floor(gameState.gameTime / 120000) * 0.25;
+        const timeMult = 1 + (gameState.gameTime / 120000) * 0.25;
         amount = Math.floor(amount * Math.min(timeMult, 5));
         playerStats.hp -= amount;
         s.uiManager.updateHPUI();

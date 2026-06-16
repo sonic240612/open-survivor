@@ -141,7 +141,7 @@ class EnemyManager {
     }
 
     getBossMaxHP(sec, bossType) {
-        const base = 17000 + (sec / 60) * 5000;
+        const base = 17000 + (sec / 60) * 3000;
         const mult = bossType === 'berserker' ? 0.8 : bossType === 'artillery' ? 1.2 : 1.0;
         return Math.floor(base * mult);
     }

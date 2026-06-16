@@ -7,6 +7,8 @@ class ModalManager {
         while (playerStats.currentExp >= playerStats.nextLevelExp) {
             playerStats.currentExp -= playerStats.nextLevelExp;
             playerStats.currentLevel++;
+            playerStats.maxHp += 2;
+            this.scene.uiManager.updateHPUI();
             playerStats.nextLevelExp = Math.floor(playerStats.nextLevelExp * 1.15);
             levelsGained++;
         }
