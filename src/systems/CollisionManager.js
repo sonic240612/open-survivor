@@ -60,6 +60,7 @@ class CollisionManager {
             isCrit = true;
         }
         enemy.hp -= damage;
+        gameState.damageStats[type] = (gameState.damageStats[type] || 0) + damage;
 
         let color = '#ffffff';
         if (type === 'bullet') color = '#ffffff';

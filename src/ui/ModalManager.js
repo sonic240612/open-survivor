@@ -92,7 +92,35 @@ class ModalManager {
         const score = (Math.floor(gameState.gameTime / 1000) * 15) + (gameState.enemiesKilled * 60);
         const timerEl = document.getElementById('timer');
         const statsEl = document.getElementById('final-stats');
-        if (statsEl) statsEl.innerHTML = `플레이 시간: ${timerEl ? timerEl.innerText : '00:00'}<br>제거한 적: ${gameState.enemiesKilled}<br>최종 평가 점수: ${score.toLocaleString()}`;
+        if (statsEl) {
+            const labels = {
+                bullet: playerStats.railgun ? '레일건' : '자동 소총',
+                sword: playerStats.plasmaBlade ? '플라즈마 블레이드' : '에너지 블레이드',
+                lightning: playerStats.stormCaller ? '스톰 콜러' : '낙뢰',
+                plasma: '플라즈마 스트라이크'
+            };
+            const types = ['bullet', 'sword', 'lightning', 'plasma'];
+            let totalDmg = 0;
+            const damageRows = types.map(t => {
+                const dmg = gameState.damageStats[t] || 0;
+                totalDmg += dmg;
+                return { type: t, dmg };
+            });
+            let html = `플레이 시간: ${timerEl ? timerEl.innerText : '00:00'}<br>제거한 적: ${gameState.enemiesKilled}<br>최종 평가 점수: ${score.toLocaleString()}`;
+            if (totalDmg > 0) {
+                html += `<br><br><div style="border-top:1px solid #555;padding-top:8px;text-align:left;display:inline-block">`;
+                html += `<div style="font-weight:bold;margin-bottom:4px">─ 데미지 통계 ─</div>`;
+                damageRows.forEach(({ type, dmg }) => {
+                    if (dmg === 0) return;
+                    const pct = ((dmg / totalDmg) * 100).toFixed(1);
+                    html += `<div style="display:flex;justify-content:space-between;gap:20px"><span>${labels[type]}</span><span>${dmg.toLocaleString()} (${pct}%)</span></div>`;
+                });
+                html += `<div style="border-bottom:1px solid #444;margin:4px 0"></div>`;
+                html += `<div style="display:flex;justify-content:space-between;gap:20px;font-weight:bold"><span>총 데미지</span><span>${totalDmg.toLocaleString()}</span></div>`;
+                html += `</div>`;
+            }
+            statsEl.innerHTML = html;
+        }
         const restartBtn = document.getElementById('restart-btn');
         if (restartBtn) restartBtn.onclick = () => scene.scene.start('MainScene');
     }

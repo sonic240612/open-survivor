@@ -38,5 +38,6 @@ const gameState = {
     worldX: 0, worldY: 0, gameTime: 0, lastFired: 0, lastLightning: 0,
     lastPlasmaBlade: 0, lastPlayerHit: 0, lastShooterFire: 0,
     lastBossSpawnInterval: 0, lastMiniBossSpawnInterval: -1,
-    paused: false, enemiesKilled: 0, isGodMode: false
+    paused: false, enemiesKilled: 0, isGodMode: false,
+    damageStats: {}
 };

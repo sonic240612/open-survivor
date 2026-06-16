@@ -186,6 +186,7 @@ class MainScene extends Phaser.Scene {
         gameState.isGodMode = false;
         gameState.worldX = 0;
         gameState.worldY = 0;
+        gameState.damageStats = {};
     }
 
     setGamePaused(paused) {
