@@ -50,8 +50,8 @@ class ModalManager {
         if (!playerStats.stormCaller && playerStats.lightningCount >= 5 && playerStats.magnetLevel >= 2) {
             pool.push({ name: '스톰 콜러', desc: '낙뢰 쿨다운 감소 및 주변 적 연쇄 타격', evolution: true, fn: () => { playerStats.stormCaller = true; playerStats.lightningDamage += 15; } });
         }
-        if (playerStats.critLevel >= 5 && playerStats.critMultiplier + playerStats.critDamageLevel * 0.05 < 1.5) {
-            pool.push({ name: '치명타 데미지 강화', desc: '치명타 배율 +5% (최대 ×1.50)', weight: 1, fn: () => { playerStats.critDamageLevel++; } });
+        if (playerStats.critLevel >= 5 && playerStats.critMultiplier + playerStats.critDamageLevel * 0.05 < 1.75) {
+            pool.push({ name: '치명타 데미지 강화', desc: '치명타 배율 +5% (최대 ×1.75)', weight: 1, fn: () => { playerStats.critDamageLevel++; } });
         }
 
         const weightedPick = (arr, n) => {
@@ -121,6 +121,19 @@ class ModalManager {
             }
             statsEl.innerHTML = html;
         }
+        const restartBtn = document.getElementById('restart-btn');
+        if (restartBtn) restartBtn.onclick = () => scene.scene.start('MainScene');
+    }
+
+    triggerBossTimeout() {
+        const scene = this.scene;
+        scene.setGamePaused(true);
+        const modal = document.getElementById('game-over-modal');
+        if (modal) modal.style.display = 'flex';
+        const score = (Math.floor(gameState.gameTime / 1000) * 15) + (gameState.enemiesKilled * 60);
+        const timerEl = document.getElementById('timer');
+        const statsEl = document.getElementById('final-stats');
+        if (statsEl) statsEl.innerHTML = `⏰ 보스를 제때 처치하지 못했습니다!<br><br>플레이 시간: ${timerEl ? timerEl.innerText : '00:00'}<br>제거한 적: ${gameState.enemiesKilled}<br>최종 평가 점수: ${score.toLocaleString()}`;
         const restartBtn = document.getElementById('restart-btn');
         if (restartBtn) restartBtn.onclick = () => scene.scene.start('MainScene');
     }

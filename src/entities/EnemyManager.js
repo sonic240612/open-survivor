@@ -172,6 +172,7 @@ class EnemyManager {
         e.isCharging = false;
         e.lastAttackTime = 0;
         e.attackCooldown = this.getBossCooldown(bossType, 1);
+        e.spawnTime = gameState.gameTime;
 
         const typeTints = { berserker: 0xff4444, artillery: 0xbb66ff, summoner: 0x44ff66 };
         e.setTint(typeTints[bossType] || 0xffffff);
@@ -301,7 +302,6 @@ class EnemyManager {
             b.setDepth(11);
             b.setAlpha(0.85);
             b.setRotation(a);
-            b.setTint(boss.bossPhase >= 3 ? 0xff6666 : (boss.bossPhase === 2 ? 0xffaa44 : 0xff7aa8));
             if (b.body) s.physics.velocityFromRotation(a, speed, b.body.velocity);
         }
 
@@ -563,7 +563,7 @@ class EnemyManager {
         gem.expValue = val;
         gem.setBlendMode(Phaser.BlendModes.ADD);
         gem.setAlpha(0.92);
-        const healChance = e.isBoss ? 6 : e.isMiniBoss ? 3.5 : e.isElite ? 1.5 : 0.5;
+        const healChance = e.isBoss ? 3 : e.isMiniBoss ? 1.75 : e.isElite ? 0.75 : 0.25;
         if (Math.random() * 100 < healChance) {
             s.heals.create(e.x, e.y, 'heal_tex').setDepth(5);
         }

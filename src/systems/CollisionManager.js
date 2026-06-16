@@ -42,9 +42,9 @@ class CollisionManager {
 
         s.physics.add.overlap(s.playerSensor, s.heals, (sens, h) => {
             if (!h.active) return;
-            playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 20);
+            playerStats.hp = Math.min(playerStats.maxHp, playerStats.hp + 10);
             s.uiManager.updateHPUI();
-            s.effectsManager.showDamageNumber(h.x, h.y, 20, '#00ff44');
+            s.effectsManager.showDamageNumber(h.x, h.y, 10, '#00ff44');
             h.destroy();
         });
     }
@@ -55,7 +55,7 @@ class CollisionManager {
         const s = this.scene;
         let isCrit = false;
         if (playerStats.critChance > 0 && Math.random() < playerStats.critChance) {
-            const mult = Math.min(1.5, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
+            const mult = Math.min(1.75, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
             damage = Math.floor(damage * mult);
             isCrit = true;
         }
@@ -86,6 +86,8 @@ class CollisionManager {
         const now = s.time.now;
         if (now - gameState.lastPlayerHit < 300) return;
         gameState.lastPlayerHit = now;
+        const timeMult = 1 + Math.floor(gameState.gameTime / 120000) * 0.25;
+        amount = Math.floor(amount * Math.min(timeMult, 5));
         playerStats.hp -= amount;
         s.uiManager.updateHPUI();
         s.cameras.main.shake(90, 0.004);

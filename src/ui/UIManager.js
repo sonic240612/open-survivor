@@ -6,13 +6,21 @@ class UIManager {
         s.hpBarGraphics = s.add.graphics().setDepth(20);
         this.bossBarGraphics = s.add.graphics().setDepth(25);
         this.bossNameText = s.add.text(400, 34, '', {
-            fontSize: '11px',
+            fontSize: '14px',
             fontFamily: CONSTANTS.FONT_FAMILY,
             color: '#ffffff',
             fontWeight: 'bold',
             stroke: '#000000',
             strokeThickness: 2
-        }).setOrigin(0.5).setDepth(26).setVisible(false);
+        }).setOrigin(0.5).setPadding(1, 2, 1, 2).setDepth(26).setVisible(false);
+        this.bossTimerText = s.add.text(400, 58, '', {
+            fontSize: '15px',
+            fontFamily: CONSTANTS.FONT_FAMILY,
+            color: '#ff4444',
+            fontWeight: 'bold',
+            stroke: '#000000',
+            strokeThickness: 2
+        }).setOrigin(0.5).setPadding(1, 2, 1, 2).setDepth(26).setVisible(false);
     }
 
     resetWebUI() {
@@ -71,7 +79,7 @@ class UIManager {
         setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
 
         setText('left-crit-chance', `${Math.round(playerStats.critChance * 100)}%`);
-        const critMult = Math.min(1.5, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
+        const critMult = Math.min(1.75, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
         setText('left-crit-damage', `×${critMult.toFixed(2)}`);
         setDisplay('left-crit-damage-row', playerStats.critLevel >= 5);
 
@@ -109,6 +117,7 @@ class UIManager {
         const boss = this.findActiveBoss();
         if (!boss) {
             this.bossNameText.setVisible(false);
+            this.bossTimerText.setVisible(false);
             return;
         }
 
@@ -132,6 +141,23 @@ class UIManager {
 
         this.bossNameText.setText(`${name}  Phase ${phase}`);
         this.bossNameText.setVisible(true);
+
+        if (boss.spawnTime != null) {
+            const elapsed = gameState.gameTime - boss.spawnTime;
+            const remaining = Math.max(0, 180000 - elapsed);
+            if (remaining > 0) {
+                const sec = Math.ceil(remaining / 1000);
+                const m = Math.floor(sec / 60);
+                const s = sec % 60;
+                this.bossTimerText.setText(`⏱ ${m}:${s.toString().padStart(2, '0')}`);
+                this.bossTimerText.setVisible(true);
+                if (sec <= 30) {
+                    this.bossTimerText.setColor('#ff2222');
+                } else {
+                    this.bossTimerText.setColor('#ff4444');
+                }
+            }
+        }
     }
 
     findActiveBoss() {

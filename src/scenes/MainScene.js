@@ -34,8 +34,10 @@ class MainScene extends Phaser.Scene {
         createTex('b_tex', 12, 0xffffff, true);
         g.clear();
         g.fillStyle(0xff3333, 1);
-        g.fillTriangle(7, 0, 14, 7, 7, 14);
-        g.fillTriangle(7, 0, 0, 7, 7, 14);
+        g.beginPath(); g.moveTo(7, 0); g.lineTo(14, 7); g.lineTo(7, 14); g.lineTo(0, 7); g.closePath();
+        g.fillPath();
+        g.lineStyle(1, 0xffffff, 1);
+        g.strokePath();
         g.generateTexture('enemy_bullet_tex', 14, 14);
         g.clear();
         this.createSwordTexture(g, 'sword_tex', 0xffffff, 0xeaf7ff, 0xffffff);
@@ -233,6 +235,12 @@ class MainScene extends Phaser.Scene {
         this.weaponManager.handleWeapons(time);
 
         this.enemyManager.simulateEnemies(dx, dy, dt, mins);
+
+        const timeoutBosses = this.enemies.getChildren().filter(e => e.active && (e.isBoss || e.isMiniBoss) && gameState.gameTime - e.spawnTime > 180000);
+        if (timeoutBosses.length > 0) {
+            this.modalManager.triggerBossTimeout();
+            return;
+        }
 
         this.uiManager.updateBossGlobalHP();
 
