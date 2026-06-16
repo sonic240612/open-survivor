@@ -56,6 +56,7 @@ class WeaponManager {
 
     chainStormLightning(source, activeEnemies) {
         const s = this.scene;
+        if (!source || !source.active) return;
         const candidates = activeEnemies
             .filter(e => e.active && e !== source && Phaser.Math.Distance.Between(source.x, source.y, e.x, e.y) < 180)
             .slice(0, 2);

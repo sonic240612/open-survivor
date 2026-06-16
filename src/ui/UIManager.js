@@ -64,11 +64,11 @@ class UIManager {
         if (el) el.style.width = `${(playerStats.hp / playerStats.maxHp) * 100}%`;
     }
 
-    updateWeaponDashboard() {
-        this.updateLeftSidebar();
+    updateWeaponDashboard(time) {
+        this.updateLeftSidebar(time);
     }
 
-    updateLeftSidebar() {
+    updateLeftSidebar(time) {
         const setText = (id, value) => { const el = document.getElementById(id); if (el) el.innerText = value; };
         const setDisplay = (id, show) => { const el = document.getElementById(id); if (el) el.style.display = show ? '' : 'none'; };
 
@@ -78,6 +78,9 @@ class UIManager {
         setText('left-reinf-fire-rate', `Lv.${playerStats.fireRateLevel}`);
         setText('left-reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
         setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
+
+        const bulletCd = Math.max(0, gameState.lastFired - (time || 0));
+        setText('weapon-primary-cooldown', bulletCd > 0 ? `${(bulletCd / 1000).toFixed(1)}s` : '✔️');
 
         setText('left-crit-chance', `${Math.round(playerStats.critChance * 100)}%`);
         const critMult = Math.min(1.75, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
@@ -90,6 +93,8 @@ class UIManager {
             setText('weapon-lightning-name', playerStats.stormCaller ? '스톰 콜러' : '낙뢰');
             setText('weapon-lightning-icon', playerStats.stormCaller ? '🌩️' : '⚡');
             setText('left-lightning-count', `Lv.${playerStats.lightningCount}`);
+            const lightningCd = Math.max(0, gameState.lastLightning - (time || 0));
+            setText('left-lightning-cooldown', lightningCd > 0 ? `${(lightningCd / 1000).toFixed(1)}s` : '✔️');
         }
 
         const hasSword = playerStats.swordCount > 0;

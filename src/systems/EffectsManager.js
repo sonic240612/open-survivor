@@ -8,7 +8,8 @@ class EffectsManager {
             speed: { min: 80, max: 220 },
             scale: { start: 1.5, end: 0 },
             blendMode: 'ADD',
-            emitting: false
+            emitting: false,
+            maxParticles: 50
         }).setDepth(15);
     }
 
