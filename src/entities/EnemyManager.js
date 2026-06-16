@@ -84,6 +84,8 @@ class EnemyManager {
             if (e.enemyType === 'shooter' && dist < 260) finalSpd *= -0.55;
             else if (e.enemyType === 'shooter' && dist < 360) finalSpd = 0;
 
+            if (e.enemyType === 'runner') finalSpd = Math.min(finalSpd, CONSTANTS.PLAYER_BASE_SPEED + 2);
+
             if (dist < 25 && finalSpd > 0) {
                 finalSpd *= -0.4;
             }
