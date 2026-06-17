@@ -79,8 +79,7 @@ class UIManager {
         setText('left-reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
         setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
 
-        const bulletCd = Math.max(0, gameState.lastFired - (time || 0));
-        setText('weapon-primary-cooldown', bulletCd > 0 ? `${(bulletCd / 1000).toFixed(1)}s` : '✔️');
+        setText('weapon-primary-firerate', `${playerStats.bulletFireRate}ms`);
 
         setText('left-crit-chance', `${Math.round(playerStats.critChance * 100)}%`);
         const critMult = Math.min(1.75, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
