@@ -77,10 +77,10 @@ class UIManager {
         setText('weapon-primary-icon', isRailgun ? '🔱' : '🔫');
         setText('left-reinf-fire-rate', `Lv.${playerStats.fireRateLevel}`);
         setText('left-reinf-damage', `Lv.${playerStats.bulletDamageLevel}`);
+        setText('left-reinf-damage-val', `${playerStats.bulletDamage}`);
         setText('left-reinf-magnet', `Lv.${playerStats.magnetLevel}`);
 
         setText('weapon-primary-firerate', `${Math.round(playerStats.bulletFireRate)}ms`);
-        setText('left-reinf-damage', `${playerStats.bulletDamage}`);
 
         setText('left-crit-chance', `${Math.round(playerStats.critChance * 100)}%`);
         const critMult = Math.min(1.75, playerStats.critMultiplier + playerStats.critDamageLevel * 0.05);
