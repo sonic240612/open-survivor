@@ -1,4 +1,6 @@
-class PlayerManager {
+import { playerStats, gameState, CONSTANTS } from '../constants.js';
+
+export class PlayerManager {
     constructor(scene) { this.scene = scene; }
 
     create() {
