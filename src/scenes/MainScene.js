@@ -186,6 +186,7 @@ class MainScene extends Phaser.Scene {
         gameState.enemiesKilled = 0;
         gameState.paused = false;
         gameState.isGodMode = false;
+        gameState.gameOverTriggered = false;
         gameState.worldX = 0;
         gameState.worldY = 0;
         gameState.damageStats = {};
@@ -236,7 +237,7 @@ class MainScene extends Phaser.Scene {
         const totalSec = Math.floor(gameState.gameTime / 1000);
         this.uiManager.updateTimerUI(totalSec);
         this.uiManager.updateScoreUI();
-        this.uiManager.updateWeaponDashboard();
+        this.uiManager.updateWeaponDashboard(time);
 
         this.enemyManager.checkBossEvents(totalSec);
 

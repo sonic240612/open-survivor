@@ -92,7 +92,10 @@ class CollisionManager {
         playerStats.hp -= amount;
         s.uiManager.updateHPUI();
         s.cameras.main.shake(90, 0.004);
-        if (playerStats.hp <= 0) s.modalManager.triggerGameOver();
+        if (playerStats.hp <= 0 && !gameState.gameOverTriggered) {
+            gameState.gameOverTriggered = true;
+            s.modalManager.triggerGameOver();
+        }
     }
 
     triggerPlasmaBladeStrike(enemy) {
