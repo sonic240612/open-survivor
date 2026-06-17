@@ -1,4 +1,6 @@
-class StartScene extends Phaser.Scene {
+import { CONSTANTS } from '../constants.js';
+
+export class StartScene extends Phaser.Scene {
     constructor() {
         super({ key: 'StartScene' });
     }

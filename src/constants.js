@@ -1,4 +1,4 @@
-const CONSTANTS = {
+export const CONSTANTS = {
     SWORD_ORBIT_RADIUS: 100,
     PLAYER_BASE_SPEED: 310,
     WORLD_WIDTH: 4000,

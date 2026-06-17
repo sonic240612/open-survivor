@@ -1,4 +1,4 @@
-class AdminConsole {
+export class AdminConsole {
     constructor(scene) { this.scene = scene; }
 
     setup() {

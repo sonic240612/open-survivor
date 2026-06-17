@@ -1,4 +1,6 @@
-class EffectsManager {
+import { CONSTANTS } from '../constants.js';
+
+export class EffectsManager {
     constructor(scene) { this.scene = scene; }
 
     create() {
