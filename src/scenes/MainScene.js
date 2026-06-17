@@ -211,6 +211,15 @@ class MainScene extends Phaser.Scene {
         if (this.uiManager && this.uiManager.alertTimeout) {
             clearTimeout(this.uiManager.alertTimeout);
         }
+        ['p_tex', 'e_tex', 'elite_tex', 'miniboss_tex', 'boss_tex',
+         'runner_tex', 'tanker_tex', 'splitter_tex', 'shooter_tex', 'buffer_tex',
+         'elite_runner_tex', 'elite_tanker_tex', 'elite_splitter_tex', 'elite_shooter_tex', 'elite_normal_tex',
+         'gem_cyan', 'gem_green', 'gem_purple', 'gem_gold',
+         'b_tex', 'enemy_bullet_tex',
+         'sword_tex', 'plasma_sword_tex',
+         'spark_tex', 'heal_tex', 'grid'].forEach(key => {
+            if (this.textures.exists(key)) this.textures.remove(key);
+        });
     }
 
     setupPauseSystem() {
