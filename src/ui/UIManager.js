@@ -1,6 +1,4 @@
-import { playerStats, gameState, CONSTANTS } from '../constants.js';
-
-export class UIManager {
+class UIManager {
     constructor(scene) { this.scene = scene; }
 
     create() {

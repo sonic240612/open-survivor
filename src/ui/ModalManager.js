@@ -1,7 +1,4 @@
-import { playerStats, gameState } from '../constants.js';
-import { submitScore, updateLeaderboardUI } from '../api/leaderboard.js';
-
-export class ModalManager {
+class ModalManager {
     constructor(scene) { this.scene = scene; }
 
     gainExp(amount) {

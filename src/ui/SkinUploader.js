@@ -1,4 +1,4 @@
-export class SkinUploader {
+class SkinUploader {
     constructor(scene) { this.scene = scene; }
 
     setup() {

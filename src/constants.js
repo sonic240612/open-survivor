@@ -1,4 +1,4 @@
-export const CONSTANTS = {
+const CONSTANTS = {
     SWORD_ORBIT_RADIUS: 100,
     PLAYER_BASE_SPEED: 310,
     WORLD_WIDTH: 4000,
@@ -90,5 +90,5 @@ const _gameState = {
     damageStats: {}
 };
 
-export const playerStats = createState(_playerStats, 'playerStats');
-export const gameState = createState(_gameState, 'gameState');
+const playerStats = createState(_playerStats, 'playerStats');
+const gameState = createState(_gameState, 'gameState');

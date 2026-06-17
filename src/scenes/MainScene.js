@@ -1,16 +1,4 @@
-import { playerStats, gameState } from '../constants.js';
-import { PlayerManager } from '../entities/PlayerManager.js';
-import { WeaponManager } from '../entities/WeaponManager.js';
-import { EnemyManager } from '../entities/EnemyManager.js';
-import { ProjectileManager } from '../entities/ProjectileManager.js';
-import { CollisionManager } from '../systems/CollisionManager.js';
-import { EffectsManager } from '../systems/EffectsManager.js';
-import { UIManager } from '../ui/UIManager.js';
-import { ModalManager } from '../ui/ModalManager.js';
-import { AdminConsole } from '../ui/AdminConsole.js';
-import { SkinUploader } from '../ui/SkinUploader.js';
-
-export class MainScene extends Phaser.Scene {
+class MainScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainScene' });
     }
