@@ -1,7 +1,7 @@
 const SUPABASE_URL = 'https://kgkyuqpsaogypbgqnauy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_ej9QiqAwmw6IznYMzN-e6A_3W3NzYbc';
 
-async function submitScore(playerName, score, kills, playTime, level) {
+export async function submitScore(playerName, score, kills, playTime, level) {
     try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
             method: 'POST',
@@ -23,7 +23,7 @@ async function submitScore(playerName, score, kills, playTime, level) {
     }
 }
 
-async function getTopScores(limit = 20) {
+export async function getTopScores(limit = 20) {
     const res = await fetch(
         `${SUPABASE_URL}/rest/v1/leaderboard?order=score.desc&limit=${limit}`,
         { headers: { 'apikey': SUPABASE_ANON_KEY } }
@@ -32,7 +32,7 @@ async function getTopScores(limit = 20) {
     return res.json();
 }
 
-async function updateLeaderboardUI() {
+export async function updateLeaderboardUI() {
     const el = document.getElementById('leaderboard-list');
     if (!el) return;
     const data = await getTopScores(10);

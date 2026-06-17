@@ -1,4 +1,6 @@
-class UIManager {
+import { playerStats, gameState, CONSTANTS } from '../constants.js';
+
+export class UIManager {
     constructor(scene) { this.scene = scene; }
 
     create() {
@@ -121,36 +123,41 @@ class UIManager {
         const g = this.bossBarGraphics;
         g.clear();
 
-        const boss = this.findActiveBoss();
-        if (!boss) {
+        const bosses = this.findAllActiveBosses();
+        if (bosses.length === 0) {
             this.bossNameText.setVisible(false);
             this.bossTimerText.setVisible(false);
             return;
         }
 
-        const hpRatio = Phaser.Math.Clamp(boss.hp / boss.maxHP, 0, 1);
         const labels = { berserker: '광전사', artillery: '포격자', summoner: '소환사' };
-        const name = (boss.isBoss ? '★ ' : '☆ ') + (labels[boss.bossType] || '수호자');
-        const phase = boss.bossPhase || 1;
-
-        const cx = 400, cy = 34;
-        const w = 340, h = 18;
-
-        g.fillStyle(0x000000, 0.55);
-        g.fillRoundedRect(cx - w / 2, cy - h / 2, w, h, 5);
-
         const phaseColors = [0x00cc44, 0xccdd00, 0xff8800, 0xff2222];
-        g.fillStyle(phaseColors[phase - 1] || 0xff0000, 0.88);
-        if (hpRatio > 0) g.fillRoundedRect(cx - w / 2, cy - h / 2, w * hpRatio, h, 5);
+        const cx = 400, w = 340, h = 18;
+        const startY = 34;
+        const spacing = 28;
 
-        g.lineStyle(1, 0xffffff, 0.3);
-        g.strokeRoundedRect(cx - w / 2, cy - h / 2, w, h, 5);
+        bosses.forEach((boss, i) => {
+            const cy = startY + i * spacing;
+            const hpRatio = Phaser.Math.Clamp(boss.hp / boss.maxHP, 0, 1);
+            const phase = boss.bossPhase || 1;
 
-        this.bossNameText.setText(`${name}  Phase ${phase}`);
+            g.fillStyle(0x000000, 0.55);
+            g.fillRoundedRect(cx - w / 2, cy - h / 2, w, h, 5);
+            g.fillStyle(phaseColors[phase - 1] || 0xff0000, 0.88);
+            if (hpRatio > 0) g.fillRoundedRect(cx - w / 2, cy - h / 2, w * hpRatio, h, 5);
+            g.lineStyle(1, 0xffffff, 0.3);
+            g.strokeRoundedRect(cx - w / 2, cy - h / 2, w, h, 5);
+        });
+
+        const first = bosses[0];
+        const label = labels[first.bossType] || '수호자';
+        const prefix = first.isBoss ? '★ ' : '☆ ';
+        const extra = bosses.length > 1 ? ` +${bosses.length - 1}` : '';
+        this.bossNameText.setText(`${prefix}${label}  Phase ${first.bossPhase || 1}${extra}`);
         this.bossNameText.setVisible(true);
 
-        if (boss.spawnTime != null) {
-            const elapsed = gameState.gameTime - boss.spawnTime;
+        if (first.spawnTime != null) {
+            const elapsed = gameState.gameTime - first.spawnTime;
             const remaining = Math.max(0, 180000 - elapsed);
             if (remaining > 0) {
                 const sec = Math.ceil(remaining / 1000);
@@ -158,19 +165,14 @@ class UIManager {
                 const s = sec % 60;
                 this.bossTimerText.setText(`⏱ ${m}:${s.toString().padStart(2, '0')}`);
                 this.bossTimerText.setVisible(true);
-                if (sec <= 30) {
-                    this.bossTimerText.setColor('#ff2222');
-                } else {
-                    this.bossTimerText.setColor('#ff4444');
-                }
+                this.bossTimerText.setColor(sec <= 30 ? '#ff2222' : '#ff4444');
             }
         }
     }
 
-    findActiveBoss() {
+    findAllActiveBosses() {
         const enemies = this.scene.enemies;
-        if (!enemies) return null;
-        const bosses = enemies.getChildren().filter(e => e.active && (e.isBoss || e.isMiniBoss));
-        return bosses.length > 0 ? bosses[0] : null;
+        if (!enemies) return [];
+        return enemies.getChildren().filter(e => e.active && (e.isBoss || e.isMiniBoss));
     }
 }

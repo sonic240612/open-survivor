@@ -1,4 +1,6 @@
-class CollisionManager {
+import { playerStats, gameState } from '../constants.js';
+
+export class CollisionManager {
     constructor(scene) { this.scene = scene; }
 
     setup() {
