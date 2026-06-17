@@ -3,6 +3,12 @@ export default {
     base: './',
     build: {
         outDir: 'dist',
+        rollupOptions: {
+            output: {
+                format: 'iife',
+                entryFileNames: 'assets/[name].[hash].js'
+            }
+        }
     },
     server: {
         open: true,
