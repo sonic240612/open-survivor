@@ -90,5 +90,5 @@ const _gameState = {
     damageStats: {}
 };
 
-const playerStats = createState(_playerStats, 'playerStats');
-const gameState = createState(_gameState, 'gameState');
+export const playerStats = createState(_playerStats, 'playerStats');
+export const gameState = createState(_gameState, 'gameState');
